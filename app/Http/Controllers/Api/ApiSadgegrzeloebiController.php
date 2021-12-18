@@ -18,7 +18,7 @@ class ApiSadgegrzeloebiController extends Controller
         $skips = \DB::table('sadgegrzelo_skip')->where('device_id', $request->get('device_id'))->pluck('sadgegrzeloebi_id')->toArray();
         $used = \DB::table('sadgegrzelo_rate')->where('device_id', $request->get('device_id'))->pluck('sadgegrzeloebi_id')->toArray();
 
-        $sadgegrzelo =(new Sadgegrzeloebi)->forPublic()->orderByRaw('RAND()');
+        $sadgegrzelo = (new Sadgegrzeloebi)->forPublic()->orderByRaw('RAND()');
 
         if($sadgegrzelo->whereNotIn('sadgegrzeloebi.id', $skips)->count() == 0){
             \DB::table('sadgegrzelo_skip')->where('device_id', $request->get('device_id'))->delete();
@@ -88,6 +88,9 @@ class ApiSadgegrzeloebiController extends Controller
         ]);
     }
 
-
-
+    public function search(Request $request){
+        return SadgegrzeloCollection::collection(
+            (new Sadgegrzeloebi)->forPublic()->where('title', 'like', "%".$request->get('keyword')."%")->orWhere('tags', 'like', "%".$request->get('keyword')."%")->get()
+        );
+    }
 }

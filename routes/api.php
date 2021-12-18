@@ -17,4 +17,5 @@ $router->group(['namespace' => 'Api'], function ($router) {
     $router->post('sadgegrzeloebi/{id}/skip', 'ApiSadgegrzeloebiController@skip');
     $router->post('sadgegrzeloebi/{id}/select', 'ApiSadgegrzeloebiController@select');
     $router->post('reset', 'ApiSadgegrzeloebiController@reset');
+    $router->get('search', 'ApiSadgegrzeloebiController@search');
 });
